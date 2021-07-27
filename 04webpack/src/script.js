@@ -35,6 +35,14 @@ window.addEventListener('resize', () => {
 
     renderer.setSize(sizes.width, sizes.height)
 })
+
+window.addEventListener('dblclick' ,  () => {
+    if (!document.fullscreenElement) {
+canvas.requestFullscreen()
+    } else {
+document.exitFullscreen()
+    }
+})
 // Scene
 const scene = new THREE.Scene();
 
@@ -71,6 +79,7 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // Animate
 const clock = new THREE.Clock();
