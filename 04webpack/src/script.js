@@ -8,6 +8,12 @@ import * as dat from 'dat.gui'
 // debug
 
 const gui = new dat.GUI()
+const parameters = {
+    color: 0xff0000,
+    spin: () => {
+        gsap.to(mesh.rotation, {duration: 1, y: mesh.rotation.y + Math.PI * 2})
+    }
+}
 
 /**
  * Base
@@ -22,13 +28,17 @@ const scene = new THREE.Scene()
  * Object
  */
 const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+const material = new THREE.MeshBasicMaterial({ color: parameters.color })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 // debug
 gui.add(mesh.position, 'y', -3,3, 0.01)
 gui.add(mesh.position, 'x', -3,3, 0.01)
 gui.add(mesh.position, 'z', -3,3, 0.01)
+gui.addColor(parameters, 'color').onChange( () => {
+    material.color.set(parameters.color)
+})
+gui.add(parameters, 'spin')
 /**
  * Sizes
  */
