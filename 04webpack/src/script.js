@@ -2,6 +2,17 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
+// textures
+const textureLoader = new THREE.TextureLoader()
+const doorColorTexture = textureLoader.load('/textures/door/color.jpg')
+const doorAlphaTexture = textureLoader.load('/textures/door/alpha.jpg')
+const doorAmbientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg')
+const doorHeightTexture = textureLoader.load('/textures/door/height.jpg')
+const doorNormalTexture = textureLoader.load('/textures/door/normal.jpg')
+const doorMetalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
+const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
+
+
 /**
  * Base
  */
@@ -13,7 +24,7 @@ const scene = new THREE.Scene();
 
 // Object
 
-const material = new THREE.MeshBasicMaterial( { color: 0xff0000});
+const material = new THREE.MeshBasicMaterial();
 
 const sphere = new THREE.Mesh(
   new THREE.SphereBufferGeometry(0.5, 16, 16),
@@ -90,8 +101,15 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+// Update object 
+sphere.rotation.y = 0.5 * elapsedTime
+plane.rotation.y = 0.5 * elapsedTime
+torus.rotation.y = 0.5 * elapsedTime
 
-  // Update controls
+sphere.rotation.x = 0.3 * elapsedTime
+plane.rotation.x = 0.4 * elapsedTime
+torus.rotation.x = 0.5 * elapsedTime
+// Update controls
   controls.update();
 
   // Render
