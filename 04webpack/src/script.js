@@ -7,6 +7,7 @@ const gui = new dat.GUI()
 
 // textures
 const textureLoader = new THREE.TextureLoader()
+const cubeTextureLoader = new THREE.CubeTextureLoader()
 
 const doorColorTexture = textureLoader.load('/textures/door/color.jpg')
 const doorAlphaTexture = textureLoader.load('/textures/door/alpha.jpg')
@@ -18,6 +19,15 @@ const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
 const matcapTexture = textureLoader.load('/textures/matcaps/8.png')
 const gradientTexture = textureLoader.load('/textures/gradients/3.jpg')
 
+
+const environmentMapTexture = cubeTextureLoader.load([
+'/textures/environmentMaps/1/px.jpg',
+'/textures/environmentMaps/1/nx.jpg',
+'/textures/environmentMaps/1/py.jpg',
+'/textures/environmentMaps/1/ny.jpg',
+'/textures/environmentMaps/1/pz.jpg',
+'/textures/environmentMaps/1/nz.jpg',
+])
 /**
  * Base
  */
@@ -51,13 +61,19 @@ const scene = new THREE.Scene();
 // material.shininess = 30
 
 const material = new THREE.MeshStandardMaterial()
-material.metalness = 0.45
-material.roughness = 0.65
-material.map = doorColorTexture
-material.aoMap = doorAmbientOcclusionTexture
-material.aoMapIntensity = 1.5
-material.displacementMap = doorHeightTexture
-material.displacementScale = 0.05
+material.metalness = 0.7
+material.roughness = 0.2
+material.envMap = environmentMapTexture
+// material.map = doorColorTexture
+// material.aoMap = doorAmbientOcclusionTexture
+// material.aoMapIntensity = 1.5
+// material.displacementMap = doorHeightTexture
+// material.displacementScale = 0.05
+// material.metalnessMap = doorMetalnessTexture
+// material.roughnessMap = doorRoughnessTexture
+// material.normalMap = doorNormalTexture
+// material.transparent = true
+// material.alphaMap = doorAlphaTexture
 
 gui.add(material, 'metalness').min(0).max(1).step(0.0001)
 gui.add(material, 'roughness').min(0).max(1).step(0.0001)
@@ -155,13 +171,13 @@ const clock = new THREE.Clock();
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 // Update object 
-sphere.rotation.y = 0.5 * elapsedTime
-plane.rotation.y = 0.5 * elapsedTime
-torus.rotation.y = 0.5 * elapsedTime
+sphere.rotation.y = 0.1 * elapsedTime
+plane.rotation.y = 0.1 * elapsedTime
+torus.rotation.y = 0.1 * elapsedTime
 
-sphere.rotation.x = 0.3 * elapsedTime
-plane.rotation.x = 0.4 * elapsedTime
-torus.rotation.x = 0.5 * elapsedTime
+sphere.rotation.x = 0.1 * elapsedTime
+plane.rotation.x = 0.1 * elapsedTime
+torus.rotation.x = 0.1 * elapsedTime
 // Update controls
   controls.update();
 
