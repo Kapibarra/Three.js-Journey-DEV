@@ -63,6 +63,7 @@ const sphere = new THREE.Mesh(
   material
 );
 sphere.position.x = -1.1;
+sphere.geometry.setAttribute('uv2' , new THREE.BufferAttribute(sphere.geometry.attributes.uv.array , 2))
 
 const plane = new THREE.Mesh(
   new THREE.PlaneBufferGeometry(1, 1, 2, 2),
