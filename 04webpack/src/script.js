@@ -11,23 +11,43 @@ fontLoader.load("/fonts/gentilis_regular.typeface.json", (font) => {
     font: font,
     size: 0.5,
     height: 0.2,
-    curveSegments: 3,
+    curveSegments: 6,
     bevelEnabled: true,
     bevelSize: 0.02,
     bevelThickness: 0.03,
     bevelOffset: 0,
-    bevelSegments:2
+    bevelSegments: 3,
   });
-textGeometry.computeBoundingBox()
-textGeometry.translate(
-    - textGeometry.boundingBox.max.x * 0.5,
-    - textGeometry.boundingBox.max.y * 0.5,
-    - textGeometry.boundingBox.max.z * 0.5,
-)
-  const textMaterial = new THREE.MeshBasicMaterial()
-  textMaterial.wireframe = true
-  const text = new THREE.Mesh(textGeometry, textMaterial)
-  scene.add(text)
+  // textGeometry.computeBoundingBox()
+  // textGeometry.translate(
+  //     - (textGeometry.boundingBox.max.x - 0.02) * 0.5,
+  //     - (textGeometry.boundingBox.max.y - 0.02) * 0.5,
+  //     - textGeometry.boundingBox.max.z * 0.5,
+  // )
+  textGeometry.center();
+  const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
+  //   textMaterial.wireframe = true
+  const text = new THREE.Mesh(textGeometry, textMaterial);
+  scene.add(text);
+
+  console.time("donuts");
+  const donutGeometry = new THREE.TorusBufferGeometry(0.3, 0.2, 20, 45);
+  const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
+
+  for (let i = 0; i < 100; i++) {
+    const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+    donut.position.x = (Math.random() - 0.5) * 10;
+    donut.position.y = (Math.random() - 0.5) * 10;
+    donut.position.z = (Math.random() - 0.5) * 10;
+
+    donut.rotation.x = Math.random() * Math.PI;
+    donut.rotation.y = Math.random() * Math.PI;
+
+    const scale = Math.random();
+    donut.scale.set(scale, scale, scale);
+    scene.add(donut);
+    console.timeEnd("donuts");
+  }
 });
 
 /**
@@ -42,12 +62,13 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 // Axis helper
-const axesHelper = new THREE.AxesHelper()
-scene.add(axesHelper)
+const axesHelper = new THREE.AxesHelper();
+scene.add(axesHelper);
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const matcapTexture = textureLoader.load("/textures/matcaps/8.png");
 
 /**
  * Object
