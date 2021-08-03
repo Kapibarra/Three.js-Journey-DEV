@@ -6,8 +6,8 @@ import * as dat from "dat.gui";
 // Fonts
 const fontLoader = new THREE.FontLoader();
 
-fontLoader.load("/fonts/gentilis_regular.typeface.json", (font) => {
-  const textGeometry = new THREE.TextBufferGeometry("MadStack", {
+fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
+  const textGeometry = new THREE.TextBufferGeometry("IGNAT", {
     font: font,
     size: 0.5,
     height: 0.2,
@@ -34,7 +34,7 @@ fontLoader.load("/fonts/gentilis_regular.typeface.json", (font) => {
   const donutGeometry = new THREE.TorusBufferGeometry(0.3, 0.2, 20, 45);
   const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 200; i++) {
     const donut = new THREE.Mesh(donutGeometry, donutMaterial);
     donut.position.x = (Math.random() - 0.5) * 10;
     donut.position.y = (Math.random() - 0.5) * 10;
