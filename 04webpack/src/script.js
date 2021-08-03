@@ -18,6 +18,12 @@ fontLoader.load("/fonts/gentilis_regular.typeface.json", (font) => {
     bevelOffset: 0,
     bevelSegments:2
   });
+textGeometry.computeBoundingBox()
+textGeometry.translate(
+    - textGeometry.boundingBox.max.x * 0.5,
+    - textGeometry.boundingBox.max.y * 0.5,
+    - textGeometry.boundingBox.max.z * 0.5,
+)
   const textMaterial = new THREE.MeshBasicMaterial()
   textMaterial.wireframe = true
   const text = new THREE.Mesh(textGeometry, textMaterial)
