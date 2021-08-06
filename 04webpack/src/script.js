@@ -20,13 +20,28 @@ const scene = new THREE.Scene()
  */
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
+gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 
-const pointLight = new THREE.PointLight(0xffffff, 0.5)
-pointLight.position.x = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
+const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3)
+directionalLight.position.set(1,0.25,0)
+scene.add(directionalLight)
+gui.add(directionalLight, 'intensity').min(0).max(1).step(0.001)
+
+
+const hemisphereLights = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.3)
+scene.add(hemisphereLights)
+
+const pointLight = new THREE.PointLight(0xff9000,0.5,10,2)
+pointLight.position.set(1, -0.5,1)
 scene.add(pointLight)
+gui.add(pointLight,'distance').min(1).max(10).step(0.5)
 
+const rectAreaLight = new THREE.RectAreaLight(0x4e00ff,4,2,3)
+rectAreaLight.position.set(1,1,0.5)
+scene.add(rectAreaLight)
+
+const spotLight = new THREE.SpotLight(0x78ff00, 0.5,10,Math.PI * 0.1, 0.25, 1)
+spotLight.position.set(0,2,3)
 /**
  * Objects
  */
@@ -91,7 +106,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 1
 camera.position.y = 1
-camera.position.z = 2
+camera.position.z = 6
 scene.add(camera)
 
 // Controls
