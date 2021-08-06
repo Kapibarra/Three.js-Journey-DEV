@@ -36,12 +36,13 @@ pointLight.position.set(1, -0.5,1)
 scene.add(pointLight)
 gui.add(pointLight,'distance').min(1).max(10).step(0.5)
 
-const rectAreaLight = new THREE.RectAreaLight(0x4e00ff,4,2,3)
-rectAreaLight.position.set(1,1,0.5)
+const rectAreaLight = new THREE.RectAreaLight(0x4e00ff,2,1,1)
+rectAreaLight.position.set(- 1.5,0,1.5)
 scene.add(rectAreaLight)
 
 const spotLight = new THREE.SpotLight(0x78ff00, 0.5,10,Math.PI * 0.1, 0.25, 1)
 spotLight.position.set(0,2,3)
+scene.add(spotLight)
 /**
  * Objects
  */
