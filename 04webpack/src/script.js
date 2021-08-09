@@ -8,6 +8,7 @@ import * as dat from 'dat.gui'
  */
 const textureLoader = new THREE.TextureLoader()
 const bakedShadow = textureLoader.load('/textures/bakedShadow.jpg')
+const simpleShadow = textureLoader.load('/textures/simpleShadow.jpg')
 
 // Debug
 const gui = new dat.GUI()
@@ -97,7 +98,8 @@ sphere.castShadow = true
 
 const plane = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(5, 5),
-    new THREE.MeshBasicMaterial({map: bakedShadow})
+    material
+    // new THREE.MeshBasicMaterial({map: bakedShadow})
 )
 plane.rotation.x = - Math.PI * 0.5
 plane.position.y = - 0.5
@@ -106,6 +108,18 @@ plane.receiveShadow = true
 
 scene.add(sphere, plane)
 
+const sphereShadow = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(1.5, 1.5),
+    new THREE.MeshBasicMaterial({
+        color:0x000000,
+        transparent: true,
+        alphaMap: simpleShadow
+    })
+)
+sphereShadow.rotation.x = - Math.PI * 0.5
+sphereShadow.position.y = plane.position.y + 0.01
+
+scene.add(sphere, sphereShadow, plane)
 /**
  * Sizes
  */
@@ -164,7 +178,14 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
-
+// Update the sphere position
+sphere.position.x = Math.cos(elapsedTime) * 1.5
+sphere.position.z = Math.sin(elapsedTime) * 1.5
+sphere.position.y = Math.abs(Math.sin(elapsedTime * 3))
+// update the shadow 
+sphereShadow.position.x = sphere.position.x
+sphereShadow.position.z = sphere.position.z
+sphereShadow.material.opacity = ( 1 - sphere.position.y) * 0.5
     // Update controls
     controls.update()
 
