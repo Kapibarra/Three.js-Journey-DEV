@@ -59,8 +59,22 @@ scene.add(spotLight.target)
 
 spotLight.shadow.mapSize.width = 1024
 spotLight.shadow.mapSize.height = 1024
+spotLight.shadow.camera.fov = 30
+spotLight.shadow.camera.near = 1
+spotLight.shadow.camera.far = 6
+
 const spotLightCameraHelper = new THREE.CameraHelper(spotLight.shadow.camera)
+spotLightCameraHelper.visible = false
 scene.add(spotLightCameraHelper)
+
+// point light 
+const pointLight = new THREE.PointLight(0xffffff, 0.3)
+pointLight.castShadow = true
+pointLight.position.set( -1, 1 , 0)
+scene.add(pointLight)
+const pointLightCameraHelper = new THREE.CameraHelper(pointLight.shadow.camera)
+
+scene.add(pointLightCameraHelper)
 /**
  * Materials
  */
