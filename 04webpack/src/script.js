@@ -49,6 +49,20 @@ const grassNormalTexture = textureLoader.load("/textures/grass/normal.jpg");
 const grassRoughnessTexture = textureLoader.load(
   "/textures/grass/roughness.jpg"
 );
+grassColorTexture.repeat.set(8,8)
+grassAmbientOcclusionTexture.repeat.set(8,8)
+grassNormalTexture.repeat.set(8,8)
+grassRoughnessTexture.repeat.set(8,8)
+
+grassColorTexture.wrapS = THREE.RepeatWrapping
+grassAmbientOcclusionTexture.wrapS = THREE.RepeatWrapping
+grassNormalTexture.wrapS = THREE.RepeatWrapping
+grassRoughnessTexture.wrapS = THREE.RepeatWrapping
+
+grassColorTexture.wrapT = THREE.RepeatWrapping
+grassAmbientOcclusionTexture.wrapT = THREE.RepeatWrapping
+grassNormalTexture.wrapT = THREE.RepeatWrapping
+grassRoughnessTexture.wrapT = THREE.RepeatWrapping
 /**
  * House
  */
@@ -161,7 +175,7 @@ const floor = new THREE.Mesh(
 );
 floor.geometry.setAttribute(
   "uv2",
-  new THREE.Float32BufferAttribute(floor.geometry.attributes.uv2, 2)
+  new THREE.Float32BufferAttribute(floor.geometry.attributes.uv.array, 2)
 );
 floor.rotation.x = -Math.PI * 0.5;
 floor.position.y = 0;
