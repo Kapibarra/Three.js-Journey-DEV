@@ -3,6 +3,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 
+
+
 /**
  * Base
  */
@@ -12,13 +14,24 @@ const gui = new dat.GUI()
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
+
 // Scene
 const scene = new THREE.Scene()
 
+// Fog 
+const fog = new THREE.Fog('#262837' , 1 ,15)
+scene.fog = fog
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
+const doorColorTexture = textureLoader.load('/textures/door/color.jpg')
+const doorAlphaTexture = textureLoader.load('/textures/door/alpha.jpg')
+const doorAmbientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg')
+const doorHeightTexture = textureLoader.load('/textures/door/height.jpg')
+const doorNormalTexture = textureLoader.load('/textures/door/normal.jpg')
+const doorMetalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
+const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
 
 /**
  * House
@@ -188,6 +201,7 @@ const tick = () =>
 
     // Render
     renderer.render(scene, camera)
+    renderer.setClearColor('#262837')
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
