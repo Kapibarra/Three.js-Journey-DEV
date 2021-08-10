@@ -170,6 +170,7 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.x = 3;
 camera.position.y = 3;
 camera.position.z = 3;
+camera.rotation.x = 0.5
 scene.add(camera);
 
 // Controls
@@ -192,7 +193,6 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
-
   // Update controls
   controls.update();
 
