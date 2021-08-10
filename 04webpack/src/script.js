@@ -44,9 +44,13 @@ for(let i = 0; i < parameters.count; i++) {
     const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
     const spinAngle = radius * parameters.spin
 
-    position[i3] = Math.cos(branchAngle + spinAngle) * radius
-    position[i3 + 1] = 0
-    position[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius
+const randomX = (Math.random() - 0.5) * parameters.randomness
+const randomY = (Math.random() - 0.5) * parameters.randomness
+const randomZ = (Math.random() - 0.5) * parameters.randomness
+
+    position[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX
+    position[i3 + 1] = 0 + randomY
+    position[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ
 }
 geometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
 
