@@ -15,15 +15,45 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-/**
- * Test cube
- */
-const cube = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial()
-)
-scene.add(cube)
+// Galaxy 
+const parameters = {}
+parameters.count = 100000
+parameters.size = 0.01
 
+let geometry = null
+let material = null
+let points = null
+
+const generateGalaxy = () => {
+
+    if ( points !== null ) {
+        geometry.dispose()
+        material.dispose()
+        scene.remove(points)
+    }
+geometry = new THREE.BufferGeometry()
+const position = new Float32Array(parameters.count * 3)
+for(let i = 0; i < parameters.count; i++) {
+    const i3 = i * 3
+    position[i3] = (Math.random() - 0.5) * 3
+    position[i3 + 1] = (Math.random() - 0.5) * 3
+    position[i3 + 2] = (Math.random() - 0.5) * 3
+}
+geometry.setAttribute('position', new THREE.BufferAttribute(position, 3))
+
+material = new THREE.PointsMaterial({
+    size : parameters.size,
+    sizeAttenuation: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+})
+points = new THREE.Points(geometry, material)
+scene.add(points)
+}
+generateGalaxy()
+
+gui.add(parameters,'count').min(100).max(100000).step(100).onFinishChange(generateGalaxy)
+gui.add(parameters,'size').min(0.001).max(0.1).step(0.0001).onFinishChange(generateGalaxy)
 /**
  * Sizes
  */
@@ -84,6 +114,7 @@ const tick = () =>
 
     // Render
     renderer.render(scene, camera)
+
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
