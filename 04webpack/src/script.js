@@ -14,7 +14,7 @@ debugObject.createSphere = () => {
 gui.add(debugObject, 'createSphere')
 // box
 debugObject.createBox = () => {
-    createBox(Math.random() * 0.5,Math.random() * 0.5,Math.random() * 0.5, { x: (Math.random() - 0.5) * 3, y: 3, z: (Math.random() - 0.5) * 3 });
+    createBox(Math.random(),Math.random(),Math.random(), { x: (Math.random() - 0.5) * 3, y: 3, z: (Math.random() - 0.5) * 3 });
 }
 gui.add(debugObject, 'createBox')
 /**
@@ -264,6 +264,7 @@ const tick = () => {
   world.step(1 / 60, deltaTime, 3);
   for (const object of objectsToUpdate) {
     object.mesh.position.copy(object.body.position);
+    object.mesh.quaternion.copy(object.body.quaternion);
   }
   // sphere.position.copy(sphereBody.position)
 
