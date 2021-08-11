@@ -20,6 +20,7 @@ const scene = new THREE.Scene()
 
 const gltfLoader = new GLTFLoader()
 const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('/draco/')
 gltfLoader.load('/models/Duck/glTF-Draco/Duck.gltf',
 (gltf) => {
 // while(gltf.scene.children.length > 0) {
