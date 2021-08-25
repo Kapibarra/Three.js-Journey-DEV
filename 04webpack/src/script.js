@@ -25,7 +25,7 @@ const testSphere = new THREE.Mesh(
 )
 scene.add(testSphere)
 // Light
-const directionalLight = new THREE.DirectionalLight("#ffffff", 1)
+const directionalLight = new THREE.DirectionalLight("#ffffff", 3)
 directionalLight.position.set(0.25, 3, -2.25)
 scene.add(directionalLight)
 
@@ -77,7 +77,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
+renderer.physicallyCorrectLights = true
 /**
  * Animate
  */
