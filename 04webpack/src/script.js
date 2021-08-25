@@ -7,7 +7,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 // Loaders 
 
 const gltfLoader = new GLTFLoader()
-
+const cubeTextureLoader = new THREE.CubeTextureLoader()
 /**
  * Base
  */
@@ -21,14 +21,33 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-/**
- * Test sphere
- */
-const testSphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(1, 32, 32),
-    new THREE.MeshStandardMaterial()
-)
-scene.add(testSphere)
+// /**
+//  * Test sphere
+//  */
+// const testSphere = new THREE.Mesh(
+//     new THREE.SphereBufferGeometry(1, 32, 32),
+//     new THREE.MeshStandardMaterial()
+// )
+// scene.add(testSphere)
+
+// update all materials 
+const updateAllMaterials = () => {
+  scene.traverse((child) => {
+    console.log(child);
+  })
+}
+
+// Enviroment map
+const environmentMap = cubeTextureLoader.load([
+  '/textures/environmentMaps/1/px.jpg',
+  '/textures/environmentMaps/1/nx.jpg',
+  '/textures/environmentMaps/1/py.jpg',
+  '/textures/environmentMaps/1/ny.jpg',
+  '/textures/environmentMaps/1/pz.jpg',
+  '/textures/environmentMaps/1/nz.jpg',
+])
+scene.background = environmentMap
+
 
 // Models 
 gltfLoader.load(
@@ -42,6 +61,8 @@ gltfLoader.load(
     scene.add(gltf.scene)
 
     gui.add(gltf.scene.rotation, 'y').min( - Math.PI).max(Math.PI).step(0.001).name('rotation')
+    
+    updateAllMaterials()
   }
 )
 
