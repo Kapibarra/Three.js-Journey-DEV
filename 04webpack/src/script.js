@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { DirectionalLightHelper } from 'three'
 
 // Loaders 
 
@@ -36,6 +37,8 @@ const updateAllMaterials = () => {
     if(child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
       child.material.envMapIntensity = debugObject.envMapIntensity
       child.material.needsUpdate = true
+      child.castShadow = true
+      child.receiveShadow = true
     }
   })
 }
@@ -78,7 +81,12 @@ gltfLoader.load(
 // Light
 const directionalLight = new THREE.DirectionalLight("#ffffff", 3)
 directionalLight.position.set(0.25, 3, -2.25)
+directionalLight.castShadow = true
+directionalLight.shadow.camera.far = 15
 scene.add(directionalLight)
+directionalLight.shadow.mapSize.set(1024, 1024)
+// const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
+// scene.add(directionalLightCameraHelper)
 
 gui.add(directionalLight,'intensity').min(0).max(10).step(0.001).name('lightIntencity')
 gui.add(directionalLight.position,'x').min(-10).max(10).step(0.001).name('lightX')
@@ -124,12 +132,17 @@ controls.enableDamping = true
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    antialias: true,
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.physicallyCorrectLights = true
 renderer.outputEncoding = THREE.sRGBEncoding
+renderer.toneMapping = THREE.ReinhardToneMapping
+renderer.toneMappingExposure = 3
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 gui.add(renderer,'toneMapping', {
   No: THREE.NoToneMapping,
@@ -141,6 +154,8 @@ gui.add(renderer,'toneMapping', {
   renderer.toneMapping = Number(renderer.toneMapping)
   updateAllMaterials()
 })
+
+gui.add(renderer,'toneMappingExposure').min(0).max(10).step(0.001)
 /**
  * Animate
  */
