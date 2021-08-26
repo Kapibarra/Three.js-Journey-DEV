@@ -35,6 +35,7 @@ const updateAllMaterials = () => {
   scene.traverse((child) => {
     if(child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
       child.material.envMapIntensity = debugObject.envMapIntensity
+      child.material.needsUpdate = true
     }
   })
 }
@@ -138,6 +139,7 @@ gui.add(renderer,'toneMapping', {
   ACESFilmic: THREE.ACESFilmicToneMapping
 }).onFinishChange(() => {
   renderer.toneMapping = Number(renderer.toneMapping)
+  updateAllMaterials()
 })
 /**
  * Animate
